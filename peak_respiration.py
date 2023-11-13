@@ -1212,8 +1212,8 @@ duration = 60
 fs = len(raw_signal) / duration
 
 # 필터링 및 피크 찾기 (최소 피크 높이와 거리 조정)
-filtered_signal = scipy.signal.medfilt(raw_signal, kernel_size=19)
-peaks, _ = scipy.signal.find_peaks(filtered_signal, distance=int(fs), height=0.1)
+filtered_signal = scipy.signal.medfilt(raw_signal, kernel_size=13)
+peaks, _ = scipy.signal.find_peaks(filtered_signal, distance=int(fs), height=0.2)
 
 # 호흡 수 파악
 brpm = len(peaks) * 60 / duration

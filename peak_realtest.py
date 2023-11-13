@@ -1212,8 +1212,8 @@ duration = 60
 fs = len(raw_signal) / duration
 
 # 필터링 및 피크 찾기 (최소 피크 높이와 거리 조정)
-filtered_signal = scipy.signal.medfilt(raw_signal, kernel_size=7)
-peaks, _ = scipy.signal.find_peaks(filtered_signal, distance=fs//4, height=0.02)
+filtered_signal = scipy.signal.medfilt(raw_signal, kernel_size=1)
+peaks, _ = scipy.signal.find_peaks(filtered_signal, distance=fs//3, height=0.14)
 
 # 심박수 파악
 bpm = len(peaks) * 60 / duration # 거리 약 20cm
