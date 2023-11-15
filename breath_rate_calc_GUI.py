@@ -1,12 +1,10 @@
 import csv
 import sys
 import numpy as np
-from matplotlib import pyplot as plt
 from scipy.fft import fft, ifft
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
-from PyQt5.QtWidgets import QApplication, QVBoxLayout, QSizePolicy, QWidget, QPushButton, QLineEdit, QFileDialog, QLabel, QGridLayout
-from typing import List, Tuple
+from PyQt5.QtWidgets import QApplication, QSizePolicy, QWidget, QPushButton, QLineEdit, QFileDialog, QLabel, QGridLayout
 
 class Application(QWidget):
     def __init__(self):
@@ -38,6 +36,9 @@ class Application(QWidget):
         self.lineEdit4 = QLineEdit()
         self.lineEdit4.setText('2.0')  # 초기값 설정
 
+        self.breathRateLabel = QLabel()  # Breath Rate를 표시할 레이블
+        self.heartRateLabel = QLabel()  # Heart Rate를 표시할 레이블
+
         layout = QGridLayout()
         layout.addWidget(self.loadBtn, 0, 0)
         layout.addWidget(QLabel('Cutoff Bandpass Filter Values:'), 0, 1)
@@ -45,8 +46,10 @@ class Application(QWidget):
         layout.addWidget(self.lineEdit2, 0, 3)
         layout.addWidget(self.lineEdit3, 0, 4)
         layout.addWidget(self.lineEdit4, 0, 5)
-        layout.addWidget(self.startBtn, 0, 6)
-        layout.addWidget(self.canvas, 1, 0, 1, 7)
+        layout.addWidget(self.breathRateLabel, 0, 6)  # 레이아웃에 Breath Rate 레이블 추가
+        layout.addWidget(self.heartRateLabel, 0, 7)  # 레이아웃에 Heart Rate 레이블 추가
+        layout.addWidget(self.startBtn, 0, 8)
+        layout.addWidget(self.canvas, 1, 0, 1, 9)
 
         self.setLayout(layout)
 
@@ -101,6 +104,9 @@ class Application(QWidget):
         print("BreathRate:", breath_signal_bpm)
         print("HeartRate:", heart_signal_bpm)
         print()
+
+        self.breathRateLabel.setText(f"BreathRate: {breath_signal_bpm}")
+        self.heartRateLabel.setText(f"HeartRate: {heart_signal_bpm}")
 
         self.plot(self.breath_signal, self.heart_signal, filtered_breath_signal, filtered_heart_signal)
 
