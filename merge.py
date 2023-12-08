@@ -3,9 +3,8 @@ import pandas as pd
 import numpy as np
 from scipy.interpolate import interp1d
 
-#folder_path = 'F:\프로젝트\초고주파레이더\data0913'  # 폴더 경로를 변경하세요
-folder_path = 'F:\프로젝트\초고주파레이더\datatest_0925'  # 폴더 경로를 변경하세요
-output_file = 'merged_csv.csv'  # 원하는 출력 파일 이름을 입력하세요
+folder_path = r'F:\차신호실험\11월24일(조수석,특정신호)'  # 폴더 경로를 변경하세요
+output_file = r'F:\차신호실험\11월24일(조수석,특정신호)_통합.csv'  # 원하는 출력 파일 이름을 입력하세요
 
 csv_files = [f for f in os.listdir(folder_path) if f.endswith('.csv')]
 
@@ -13,7 +12,10 @@ data_frames = []
 
 # 사용자 지정 헤더 생성  (중요)
 #column_names = ['Col_1', 'Col_2', 'Col_3', 'Col_4', 'Col_5']
-column_names = ['Col_1', 'Col_2', 'Col_3', 'Col_4', 'Col_5','Col_6', 'Col_7', 'Col_8', 'Col_9']
+# time, unwrapPhaseSignal, filterBreathSignal, filterHeartSignal, status,
+#             leBlinkingCount, reBlinkingCount, leDownElapsed, reDownElapsed, co2, bkStatus, fatigueSignal
+column_names = ['time', 'unwrapPhaseSignal', 'filterBreathSignal', 'filterHeartSignal', 'status','leBlinkingCount',
+                'reBlinkingCount', 'leDownElapsed', 'reDownElapsed','co2','bkStatus','fatigueSignal']
 
 # def add_noise(signal, noise_level=0.01):
 #     noise = np.random.normal(0, noise_level, len(signal))

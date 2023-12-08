@@ -1,6 +1,7 @@
 import csv
 import sys
 import numpy as np
+from scipy import signal
 from scipy.fft import fft, ifft
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
@@ -64,7 +65,49 @@ class Application(QWidget):
                     self.breath_signal.append(float(row[2]))
                     self.heart_signal.append(float(row[1]))
 
-            self.plot(self.breath_signal, self.heart_signal)
+            # Threshold for pulling values close to zero
+            data = np.array(self.heart_signal)
+            data = np.round(data, 6)
+
+            # Threshold for pulling values close to zero
+            threshold = 2
+
+            i = 1
+            while i < len(data) - 1:
+
+                diff = np.diff(data)
+                large_diff_indices = np.where(np.abs(diff) > threshold)[
+                    0]  # Find indices where diff exceeds the threshold
+
+                if len(large_diff_indices) == 0:  # If no more data exceeds the threshold, break
+                    break
+
+                adjust_value  = round(data[i] - data[i-1], 1)
+                print(adjust_value)
+                if abs(adjust_value) > threshold:
+                    for j in range(i, len(data)):
+                        data[j] -= adjust_value
+                else:
+                    i += 1
+
+            # Your processed data
+            data = np.round(data, 6)
+            processed_data = data
+
+            mean_value = np.mean(processed_data)
+            centered_data = processed_data - mean_value
+
+            # 데이터의 평균을 계산합니다.
+            mean = np.mean(centered_data)
+
+            # 각 데이터 포인트에서 평균을 뺍니다.
+            centered_data = np.round(centered_data - mean, 6)
+            print(centered_data)
+
+            self.heart_signal=centered_data
+
+            self.plot(self.breath_signal, centered_data)
+
 
     def start_processing(self):
 

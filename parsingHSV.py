@@ -2,11 +2,11 @@ import xml.etree.ElementTree as ET
 import csv
 
 # Parse XML file
-tree = ET.parse('export.xml')
+tree = ET.parse('exports.xml')
 root = tree.getroot()
 
 # Open CSV file
-with open('heart_rate_data.csv', 'w', newline='') as file:
+with open('heart_rate_data_1120.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(["startDate", "value"])
 

@@ -62,7 +62,7 @@ class Application(QWidget):
                 self.heart_signal = []
                 for row in reader:
                     self.breath_signal.append(float(row[2]))
-                    self.heart_signal.append(float(row[1]))
+                    self.heart_signal.append(float(row[3]))
 
             self.plot(self.breath_signal, self.heart_signal)
 
